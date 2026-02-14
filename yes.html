@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Memories 💜</title>
+
+<style>
+*{ box-sizing:border-box; }
+
+/* ================= GENERAL ================= */
+body{
+  margin:0;
+  font-family:"Comic Sans MS", cursive;
+  background: linear-gradient(135deg,#7f00ff,#e100ff,#ff4fd8,#ff9ff3);
+  background-size:400% 400%;
+  animation:bgMove 10s infinite alternate;
+  overflow:hidden;
+}
+
+/* Background Animation */
+@keyframes bgMove{
+  0%{background-position:0% 50%;}
+  100%{background-position:100% 50%;}
+}
+
+/* ================= GAME PAGE ================= */
+
+#gamePage{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  text-align:center;
+  padding:10px;
+}
+
+#gamePage h1{
+  font-size:clamp(22px,4vw,36px);
+  text-shadow:0 0 15px #ff9ff3;
+}
+
+#score{
+  font-size:22px;
+  margin:10px;
+}
+
+#gameArea{
+  position:relative;
+  width:100%;
+  height:70vh;
+  overflow:hidden;
+}
+
+/* Basket */
+#basket{
+  position:absolute;
+  bottom:10px;
+  font-size:100px;
+  left:50%;
+  transform:translateX(-50%);
+  pointer-events:none;
+}
+
+/* falling hearts */
+.heart{
+  position:absolute;
+  top:-40px;
+  font-size:35px;
+}
+
+/* ================= GALLERY PAGE ================= */
+
+#galleryPage{
+  display:none;
+  min-height:100vh;
+  overflow-y:auto;
+  color:white;
+  padding-bottom:80px;
+}
+
+/* heading */
+.title{
+  text-align:center;
+  padding:15px;
+  font-size:30px;
+  text-shadow:0 0 15px #ff9ff3;
+}
+
+/* ===== GRID PHOTO GALLERY (2 ROWS × 3 COLUMNS) ===== */
+.collage{
+  width:100%;
+  max-width:1100px;
+  margin:20px auto;
+  display:grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap:15px;
+  padding:15px;
+}
+
+.photo{
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 12px 30px rgba(0,0,0,0.4);
+  background:white;
+  padding:5px;
+}
+
+.photo img{
+  width:100%;
+  height:260px;
+  object-fit:cover;
+  border-radius:12px;
+  transition:0.4s;
+}
+
+/* hover zoom effect */
+.photo img:hover{
+  transform:scale(1.08);
+}
+
+/* floating hearts */
+.bgHeart{
+  position:fixed;
+  bottom:-40px;
+  font-size:22px;
+  opacity:0.6;
+  animation: float 8s linear infinite;
+  z-index:0;
+}
+
+/* NEXT BUTTON */
+.nextBtn{
+  display:block;
+  margin:20px auto;
+  padding:16px 45px;
+  font-size:20px;
+  border:none;
+  border-radius:40px;
+  background: linear-gradient(45deg,#ff4fd8,#7f00ff);
+  color:white;
+  cursor:pointer;
+  box-shadow:0 6px 20px #ff4fd8;
+}
+
+/* Floating animation */
+@keyframes float{
+  to{ transform:translateY(-110vh); }
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+
+/* Tablet */
+@media (max-width: 768px){
+  #basket{ font-size:120px; }
+
+  .collage{
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  }
+
+  .photo img{
+    height:240px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px){
+  .collage{
+    grid-template-columns:1fr; /* 1 column */
+  }
+
+  .photo img{
+    height:300px;
+  }
+
+  .title{
+    font-size:24px;
+  }
+
+  .nextBtn{
+    font-size:18px;
+    padding:14px 35px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- GAME PAGE -->
+<div id="gamePage">
+  <h1>Catch 10 Hearts to Unlock Our Memories 💜</h1>
+  <div id="score">Hearts: 0 / 10</div>
+
+  <div id="gameArea">
+    <div id="basket">🧺</div>
+  </div>
+</div>
+
+<!-- GALLERY PAGE -->
+<div id="galleryPage">
+  <div class="title">Our Love Story 💕</div>
+
+  <div class="collage">
+    <div class="photo"><img src="image1.jpeg"></div>
+    <div class="photo"><img src="image2.jpeg"></div>
+    <div class="photo"><img src="image3.jpeg"></div>
+
+    <div class="photo"><img src="image4.jpeg"></div>
+    <div class="photo"><img src="image5.jpeg"></div>
+    <div class="photo"><img src="image6.jpeg"></div>
+  </div>
+
+  <!-- NEXT BUTTON UNDER PHOTOS -->
+  <button class="nextBtn" onclick="location.href='final.html'">
+    Next  ➜ 💌
+  </button>
+</div>
+
+<script>
+const basket = document.getElementById("basket");
+const gameArea = document.getElementById("gameArea");
+const scoreText = document.getElementById("score");
+const gamePage = document.getElementById("gamePage");
+const galleryPage = document.getElementById("galleryPage");
+
+let score = 0;
+
+/* Basket move (Desktop) */
+document.addEventListener("mousemove",(e)=>{
+  basket.style.left = e.clientX - basket.offsetWidth/2 + "px";
+});
+
+/* Basket move (Mobile Touch) */
+document.addEventListener("touchmove",(e)=>{
+  let x = e.touches[0].clientX;
+  basket.style.left = x - basket.offsetWidth/2 + "px";
+});
+
+/* Falling hearts */
+function createHeart(){
+  if(gamePage.style.display==="none") return;
+
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="💜";
+  heart.style.left=Math.random()*window.innerWidth+"px";
+  gameArea.appendChild(heart);
+
+  let pos=0;
+  const fall=setInterval(()=>{
+    pos+=5;
+    heart.style.top=pos+"px";
+
+    const h=heart.getBoundingClientRect();
+    const b=basket.getBoundingClientRect();
+
+    if(h.bottom>b.top && h.left<b.right && h.right>b.left){
+      score++;
+      scoreText.innerText=`Hearts: ${score} / 10`;
+      heart.remove();
+      clearInterval(fall);
+
+      if(score>=10) showGallery();
+    }
+
+    if(pos>window.innerHeight){
+      heart.remove();
+      clearInterval(fall);
+    }
+  },20);
+}
+
+const gameInterval=setInterval(createHeart,700);
+
+/* Show Gallery */
+function showGallery(){
+  clearInterval(gameInterval);
+  gamePage.style.display="none";
+  galleryPage.style.display="block";
+  document.body.style.overflowY="auto";
+
+  /* Floating background hearts */
+  setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="bgHeart";
+    h.innerHTML="💜";
+    h.style.left=Math.random()*100+"vw";
+    galleryPage.appendChild(h);
+    setTimeout(()=>h.remove(),8000);
+  },400);
+}
+</script>
+
+</body>
+</html>

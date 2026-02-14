@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Be My Valentine 💜</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Body Background Purple + Pink */
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  overflow: hidden;
+
+  background: linear-gradient(135deg, #7f00ff, #e100ff, #ff4fd8, #ff9ff3);
+  background-size: 400% 400%;
+  animation: bgMove 10s infinite alternate;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Background Animation */
+@keyframes bgMove {
+  0% {background-position: 0% 50%;}
+  100% {background-position: 100% 50%;}
+}
+
+/* Floating hearts & balloons */
+.heart, .balloon {
+  position: absolute;
+  bottom: -50px;
+  animation: floatUp 10s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-120vh);
+  }
+}
+
+.heart { font-size: 22px; }
+.balloon { font-size: 24px; }
+
+/* Valentine Card */
+.card {
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
+  padding: 30px 40px;
+  border-radius: 30px;
+  text-align: center;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+  z-index: 10;
+  width: 90%;
+  max-width: 420px;
+  border: 3px solid #ff4fd8;
+}
+
+/* Title */
+h1 {
+  color: #8e2de2;
+  font-size: clamp(22px, 4vw, 36px);
+  margin-bottom: 25px;
+  text-shadow: 0 0 8px #ff9ff3;
+}
+
+/* Buttons */
+button {
+  padding: 12px 22px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  margin: 8px;
+  transition: 0.2s;
+  min-width: 120px;
+  font-weight: bold;
+}
+
+/* YES Button */
+#yesBtn {
+  background: linear-gradient(45deg, #ff4fd8, #7f00ff);
+  color: white;
+  box-shadow: 0 0 10px #ff4fd8;
+}
+
+#yesBtn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #7f00ff;
+}
+
+/* NO Button */
+#noBtn {
+  background: #999;
+  color: white;
+  position: relative;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .card {
+    padding: 20px;
+  }
+
+  button {
+    width: 100%;
+    max-width: 220px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>Will you be my Valentine? 💜</h1>
+  <button id="yesBtn">Yes 💕</button>
+  <button id="noBtn">No 😢</button>
+</div>
+
+<script>
+/* Floating hearts & balloons */
+function createFloating() {
+  const el = document.createElement("div");
+  el.className = Math.random() > 0.5 ? "heart" : "balloon";
+  el.innerHTML = el.className === "heart" ? "💜" : "🎈";
+
+  el.style.left = Math.random() * 100 + "vw";
+  el.style.animationDuration = (6 + Math.random() * 6) + "s";
+  el.style.fontSize = (18 + Math.random() * 30) + "px";
+
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 12000);
+}
+setInterval(createFloating, 350);
+
+
+/* No button moving */
+const noBtn = document.getElementById("noBtn");
+
+function moveNoButton() {
+  const x = Math.random() * (window.innerWidth - 140);
+  const y = Math.random() * (window.innerHeight - 100);
+
+  noBtn.style.position = "absolute";
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
+
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("touchstart", moveNoButton);
+
+
+/* Yes Button Redirect */
+document.getElementById("yesBtn").onclick = () => {
+  window.location.href = "yes.html";
+};
+</script>
+
+</body>
+</html>

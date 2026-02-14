@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>❤️ My Final Surprise</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  font-family:"Comic Sans MS", cursive;
+  background:linear-gradient(135deg,#7f00ff,#e100ff,#ff4fd8);
+  text-align:center;
+  color:white;
+  overflow:hidden;
+  padding:10px;
+}
+
+h1{
+  font-size:60px; /* BIGGER */
+  margin-bottom:15px;
+  text-shadow:0 0 20px #ff4fd8;
+}
+
+p{
+  font-size:28px; /* BIGGER */
+  max-width:520px;
+  text-shadow:0 0 10px rgba(0,0,0,0.4);
+}
+
+/* CALL BUTTON */
+.callBtn{
+  margin-top:40px;
+  padding:20px 55px; /* BIGGER BUTTON */
+  font-size:24px; /* BIGGER TEXT */
+  border:none;
+  border-radius:50px;
+  background:white;
+  color:#7f00ff;
+  cursor:pointer;
+  text-decoration:none;
+  font-weight:bold;
+  box-shadow:0 10px 30px #ff4fd8;
+  transition:0.3s;
+}
+
+.callBtn:hover{
+  transform:scale(1.15);
+  background:#ff4fd8;
+  color:white;
+}
+
+/* floating hearts */
+.float{
+  position:fixed;
+  bottom:-50px;
+  animation:rise linear forwards;
+  z-index:-1;
+  opacity:0.8;
+}
+
+@keyframes rise{
+  to{
+    transform:translateY(-120vh);
+    opacity:0;
+  }
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 600px) {
+
+  h1{
+    font-size: 50px; /* VERY BIG LOVE TEXT */
+  }
+
+  p{
+    font-size: 26px; /* Bigger message text */
+    padding: 0 20px;
+  }
+
+  .callBtn{
+    font-size: 26px; /* Big button text */
+    padding: 22px 60px; /* BIG BUTTON SIZE */
+    border-radius: 60px;
+  }
+}
+
+
+</style>
+</head>
+
+<body>
+
+<h1>I Love You 💜</h1>
+
+<p>
+You completed every level…  
+Now there’s only one thing left…  
+Call me and say “I love you” 💕
+</p>
+
+<!-- 📞 CALL BUTTON -->
+<a href="tel:+916374066617" class="callBtn">
+   Call Me 💜
+</a>
+
+<script>
+/* floating hearts animation */
+function floatHeart(){
+  const hearts=["💜","💖","💕","💗"];
+  const el=document.createElement("div");
+  el.className="float";
+  el.innerHTML=hearts[Math.floor(Math.random()*hearts.length)];
+  el.style.left=Math.random()*100+"vw";
+  el.style.fontSize=(25+Math.random()*50)+"px"; /* bigger hearts */
+  el.style.animationDuration=(6+Math.random()*6)+"s";
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),12000);
+}
+
+setInterval(floatHeart,400);
+</script>
+
+</body>
+</html>
